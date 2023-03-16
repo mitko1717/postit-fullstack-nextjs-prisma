@@ -1,11 +1,9 @@
-import NextAuth from "next-auth"
-import GoogleProvider from "next-auth/providers/google"
-import { PrismaAdapter } from "@next-auth/prisma-adapter"
-import { PrismaClient } from "@prisma/client"
-// easy way to set up prisma models and make it work with nextjs together
+import NextAuth from "next-auth";
+import GoogleProvider from "next-auth/providers/google";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import { PrismaClient } from "@prisma/client";
 
-// const prisma = new PrismaClient()
-
+// set up prisma models and make it work with nextjs together
 export default NextAuth({
   adapter: PrismaAdapter(prisma),
   providers: [
@@ -14,4 +12,4 @@ export default NextAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
   ],
-})
+});
