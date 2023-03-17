@@ -2,11 +2,11 @@ import "./globals.css";
 import Nav from "./auth/Nav";
 import { Roboto } from "next/font/google";
 // import AuthContext from "./auth/AuthContext"
-import QueryWrapper from "./QueryWrapper"
+import QueryWrapper from "./QueryWrapper";
 
 const roboto = Roboto({
   subsets: ["latin"],
-  weight: ["400", "700"],
+  weight: ["300", "400", "700"],
   variable: "--font-roboto",
 });
 

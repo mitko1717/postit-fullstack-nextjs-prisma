@@ -1,9 +1,9 @@
 "use client";
 
-import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React, { FormEvent, useState } from "react";
-// import toast from "react-hot-toast"
-import axios, { AxiosError } from "axios"
+import toast from "react-hot-toast"
+import axios, { AxiosError } from "axios";
 
 export default function CreatePost() {
   const [title, setTitle] = useState("");
@@ -13,15 +13,28 @@ export default function CreatePost() {
 
   // Create a post
   const { mutate } = useMutation(
-    async (title: string) => await axios.post('/api/posts/addPost', { title })
+    // make request
+    async (title: string) => await axios.post("/api/posts/addPost", { title }),
+    {
+        onError: (error) => {
+            if (error instanceof AxiosError) {
+                toast.error(error?.response?.data.message)
+            }
+            setIsDisabled(false)
+        },
+        onSuccess: (data) => {
+            toast.success('post has been made', { id: toastPostID })
+            setTitle('')
+            setIsDisabled(false)
+        }
+    }
   )
 
   const submitPost = async (e: FormEvent) => {
-    e.preventDefault()
-    setIsDisabled(true)
-    // call mutate
-    mutate(title)
-  }
+    e.preventDefault();
+    setIsDisabled(true);
+    mutate(title);
+  };
 
   return (
     <form onSubmit={submitPost} className="bg-gray-700 my-8 p-8 rounded">
@@ -37,7 +50,7 @@ export default function CreatePost() {
       <div className=" flex items-center justify-between gap-2">
         <p
           className={`font-bold text-sm ${
-            title.length > 300 ? "text-red-700" : "text-gray-700"
+            title.length > 300 ? "text-red-700" : ""
           } `}
         >{`${title.length}/300`}</p>
         <button

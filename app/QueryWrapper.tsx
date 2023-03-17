@@ -1,20 +1,22 @@
-'use client'
+"use client";
 
-import React, { ReactNode } from 'react'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import React, { ReactNode } from "react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Toaster } from "react-hot-toast";
 
 interface Props {
-    children?: ReactNode
+  children?: ReactNode;
 }
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient();
 
 const QueryWrapper = ({ children }: Props) => {
   return (
     <QueryClientProvider client={queryClient}>
-        {children}
+      <Toaster />
+      {children}
     </QueryClientProvider>
-  )
-}
+  );
+};
 
-export default QueryWrapper
+export default QueryWrapper;
