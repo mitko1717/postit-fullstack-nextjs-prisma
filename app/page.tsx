@@ -30,10 +30,13 @@ export default function Home() {
           name={post.user.name}
           avatar={post.user.image}
           postTitle={post.title}
-          comments={post.comments} title={""} user={{
+          comments={post.comments}
+          title={""}
+          user={{
             name: "",
-            image: ""
-          }}        />
+            image: "",
+          }}
+        />
       ))}
     </main>
   );
