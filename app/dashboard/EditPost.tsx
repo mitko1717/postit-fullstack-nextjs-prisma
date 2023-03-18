@@ -2,7 +2,7 @@
 
 import Image from "next/image"
 import { useState } from "react"
-// import Toggle from "./Toggle"
+import Toggle from "./Toggle"
 import { useMutation, useQueryClient } from "react-query"
 import toast from "react-hot-toast"
 import axios from "axios"
@@ -13,6 +13,7 @@ type EditProps = {
   avatar: string
   name: string
   title: string
+  createdAt: string
   comments?: {
     id: string
     postId: string
@@ -25,11 +26,28 @@ export default function EditPost({
     name,
     title,
     comments,
-    id,
+    createdAt,
+    id
   }: EditProps) {
     const [toggle, setToggle] = useState(false)
     const queryClient = useQueryClient()
     let deleteToastID: string
+
+    const { mutate } = useMutation(
+      async (id: string) => await axios.delete('/api/posts/deletePost', { data: id }),
+      {
+        onError: (e) => {
+          console.log(e)
+        },
+        onSuccess: (data) => {
+          console.log(data)          
+        }
+      }
+    )
+
+    const deletePost = () => {
+      mutate(id)
+    }
 
     return (
         <>
@@ -39,6 +57,7 @@ export default function EditPost({
             transition={{ ease: "easeOut" }}
             className="bg-white my-8 p-8 rounded-lg "
           >
+            <h4 className="text-gray-700 mb-2 text-xs">{new Date(createdAt).toLocaleString()}</h4>
             <div className="flex items-center gap-2">
               <Image width={32} height={32} src={avatar} alt="avatar" />
               <h3 className="font-bold text-gray-700">{name}</h3>
@@ -48,7 +67,7 @@ export default function EditPost({
             </div>
             <div className="flex items-center gap-4 ">
               <p className=" text-sm font-bold text-gray-700">
-                {comments?.length} Comments
+                {comments?.length} comments
               </p>
               <button
                 onClick={(e) => {
@@ -57,11 +76,11 @@ export default function EditPost({
                 }}
                 className="text-sm font-bold text-red-500"
               >
-                Delete
+                delete
               </button>
             </div>
           </motion.div>
-          {/* {toggle && <Toggle deletePost={deletePost} setToggle={setToggle} />} */}
+          {toggle && <Toggle deletePost={deletePost} setToggle={setToggle} />}
         </>
       )
   }

@@ -1,5 +1,4 @@
 "use client";
-
 import { useMutation, useQueryClient } from "react-query";
 import React, { FormEvent, useState } from "react";
 import toast from "react-hot-toast";
@@ -8,7 +7,7 @@ import axios, { AxiosError } from "axios";
 export default function CreatePost() {
   const [title, setTitle] = useState("");
   const [isDisabled, setIsDisabled] = useState(false);
-  // const queryClient = useQueryClient()
+  const queryClient = useQueryClient()
   let toastPostID: string;
 
   //Create a post
@@ -25,7 +24,8 @@ export default function CreatePost() {
         setIsDisabled(false);
       },
       onSuccess: (data) => {
-        // queryClient.invalidateQueries(["posts"])
+        // queryClient to auto refetching data when send msg
+        queryClient.invalidateQueries(["posts"])
         toast.success("post has been made", { id: toastPostID });
         setTitle("");
         setIsDisabled(false);

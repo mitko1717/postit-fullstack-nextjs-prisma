@@ -32,6 +32,7 @@ const { data, isLoading } = useQuery<AuthPosts>({
           name={data.name}
           title={post.title}
           comments={post.comments}
+          createdAt={post.createdAt}
         />
       ))}
     </div>
