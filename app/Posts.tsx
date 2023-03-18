@@ -9,7 +9,7 @@ export default function Post({
   postTitle,
   comments,
   user,
-  createdAt
+  createdAt,
 }: PostsType) {
   return (
     <motion.div
@@ -18,7 +18,9 @@ export default function Post({
       transition={{ ease: "easeOut" }}
       className="bg-white my-8 p-8 rounded-lg "
     >
-      <h4 className="text-gray-700 mb-2 text-xs">{new Date(createdAt).toLocaleString()}</h4>
+      <h4 className="text-gray-700 mb-2 text-xs">
+        {new Date(createdAt).toLocaleString()}
+      </h4>
       <div className="flex items-center gap-2">
         <Image
           className="rounded-full"

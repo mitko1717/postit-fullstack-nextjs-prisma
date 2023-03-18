@@ -7,7 +7,7 @@ import axios, { AxiosError } from "axios";
 export default function CreatePost() {
   const [title, setTitle] = useState("");
   const [isDisabled, setIsDisabled] = useState(false);
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
   let toastPostID: string;
 
   //Create a post
@@ -25,7 +25,7 @@ export default function CreatePost() {
       },
       onSuccess: (data) => {
         // queryClient to auto refetching data when send msg
-        queryClient.invalidateQueries(["posts"])
+        queryClient.invalidateQueries(["posts"]);
         toast.success("post has been made", { id: toastPostID });
         setTitle("");
         setIsDisabled(false);
