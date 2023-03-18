@@ -1,9 +1,9 @@
 export type PostsType = {
-  title: string;
+  title?: string;
   id: string;
   createdAt?: string;
-  name?: string;
-  avatar: string;
+  // name?: string;
+  // avatar: string;
   postTitle?: string;
   comments?: {
     createdAt: string;

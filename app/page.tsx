@@ -1,7 +1,7 @@
 "use client";
 import axios from "axios";
 import AddPost from "./AddPost";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery } from "react-query";
 import Post from "./Posts";
 import { PostsType } from "./types/Posts";
 
@@ -27,15 +27,11 @@ export default function Home() {
         <Post
           key={post.id}
           id={post.id}
-          name={post.user.name}
-          avatar={post.user.image}
+          // name={post.user.name}
+          // avatar={post.user.image}
           postTitle={post.title}
           comments={post.comments}
-          title={""}
-          user={{
-            name: "",
-            image: "",
-          }}
+          user={post.user}
         />
       ))}
     </main>

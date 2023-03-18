@@ -6,10 +6,9 @@ import { PostsType } from "./types/Posts";
 
 export default function Post({
   id,
-  name,
-  avatar,
   postTitle,
   comments,
+  user
 }: PostsType) {
   return (
     <motion.div
@@ -23,10 +22,10 @@ export default function Post({
           className="rounded-full"
           width={32}
           height={32}
-          src={avatar}
+          src={user.image}
           alt="avatar"
         />
-        <h3 className="font-bold text-gray-700">{name}</h3>
+        <h3 className="font-bold text-gray-700">{user.name}</h3>
       </div>
       <div className="my-8 ">
         <p className="break-all text-slate-700">{postTitle}</p>
