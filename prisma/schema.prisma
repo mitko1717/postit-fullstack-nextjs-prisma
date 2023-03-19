@@ -35,7 +35,7 @@ model Post {
 // comment is part of POST and USER
 model Comment {
   id  String @id @default(cuid())
-  message String
+  title String
   postId String
   userId String
   createdAt DateTime @default(now())

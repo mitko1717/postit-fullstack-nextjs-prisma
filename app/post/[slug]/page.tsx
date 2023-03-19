@@ -38,7 +38,7 @@ export default function PostDetail(url: URL) {
           createdAt={data.createdAt}
         />
         <AddComment id={data?.id} />
-        {/* {data?.comments?.map((comment) => (
+        {data?.comments?.map((comment) => (
           <motion.div
             animate={{ opacity: 1, scale: 1 }}
             initial={{ opacity: 0, scale: 0.8 }}
@@ -46,7 +46,7 @@ export default function PostDetail(url: URL) {
             className="my-6 bg-white p-8 rounded-md"
             key={comment.id}
           >
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 text-slate-700">
               <Image
                 width={24}
                 height={24}
@@ -54,11 +54,11 @@ export default function PostDetail(url: URL) {
                 alt="avatar"
               />
               <h3 className="font-bold">{comment?.user?.name}</h3>
-              <h2 className="text-sm">{comment.createdAt}</h2>
+              <h2 className="text-sm">{new Date(comment.createdAt).toLocaleString()}</h2>
             </div>
-            <div className="py-4">{comment.title}</div>
+            <div className="py-4 text-slate-700">{comment.title}</div>
           </motion.div>
-        ))} */}
+        ))}
       </div>
     );
   }

@@ -3,7 +3,6 @@ import { FormEvent, useState } from "react"
 import { useMutation, useQueryClient } from "react-query"
 import axios, { AxiosError } from "axios"
 import toast from "react-hot-toast"
-import { PostType } from "./types/Post"
 
 type Comment = {
   postId?: string
@@ -15,16 +14,17 @@ type PostProps = {
 
 export default function AddComment({ id }: PostProps) {
     let commentToastId: string
-    // console.log(id)
     const [title, setTitle] = useState("")
     const [isDisabled, setIsDisabled] = useState(false)
   
     const queryClient = useQueryClient()
-
+    
     const { mutate } = useMutation(
        async (data: Comment) => axios.post('/api/posts/addComment', { data }),
        {
         onSuccess: data => {
+            console.log('data', data);
+            queryClient.invalidateQueries(["detail-post"])
             setTitle("")
             setIsDisabled(false)
             toast.success("added your comment", { id: commentToastId })
@@ -33,7 +33,7 @@ export default function AddComment({ id }: PostProps) {
             setIsDisabled(false)
             if (error instanceof AxiosError) {
                 toast.error(error?.response?.data.message, { id: commentToastId })
-              }
+            }
         }
        }
     )
@@ -41,13 +41,13 @@ export default function AddComment({ id }: PostProps) {
     const submitPost = (e: FormEvent) => {
         e.preventDefault()
         setIsDisabled(true)
-        commentToastId = toast.loading("adding your commetn", { id: commentToastId, duration: 2500 });
+        commentToastId = toast.loading("adding your comment", { id: commentToastId, duration: 2500 });
         mutate({ title, postId: id })
     }
 
     return (
         <form 
-            // onSubmit={submitPost} 
+            onSubmit={submitPost} 
             className="my-8"
         >
         <h3 className="text-xl">add a comment</h3>
@@ -58,7 +58,7 @@ export default function AddComment({ id }: PostProps) {
             value={title}
             type="text"
             name="title"
-            className="p-4 text-lg rounded-md my-2"
+            className="p-4 text-lg rounded-md my-2 text-slate-700"
           />
         </div>
         <div className="flex items-center gap-2">

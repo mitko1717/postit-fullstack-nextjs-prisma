@@ -1,5 +1,5 @@
 import prisma from "../../../prisma/client";
-import { getServerSession } from "next-auth/next"; // unstable_getServerSession
+import { getServerSession } from "next-auth/next";
 import { authOptions } from "../auth/[...nextauth]";
 import type { NextApiRequest, NextApiResponse } from "next";
 
@@ -12,28 +12,28 @@ export default async function handler(
     if (!session)
       return res.status(401).json({ message: "pls sign in to make a post" });
 
-    const title: string = req.body.title;
-
     // get user
     const prismaUser = await prisma.user.findUnique({
-      where: { email: session?.user?.email },
-    });
+        where: { email: session.user?.email }
+    })
 
-    // check title
-    if (title.length > 300)
-      return res.status(403).json({ message: "pls write a shorter post" });
-    if (!title.length)
-      return res.status(403).json({ message: "pls write something" });
-
-    // create post
+    // add a comment
     try {
-      const result = await prisma.post.create({
+      const { title, postId } = req.body.data
+      
+      if (!title.length) {
+        return res.status(401).json({ message: "pls enter something"});
+      }
+
+      const result = await prisma.comment.create({
         data: {
-          title,
-          userId: prismaUser.id,
-        },
-      });
-      res.status(200).json(result);
+            title,
+            userId: prismaUser?.id,
+            postId
+        }
+      })
+
+      res.status(200).json(result)
     } catch (e) {
       res.status(403).json({ e: "error has occured making a post" });
     }
