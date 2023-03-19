@@ -6,7 +6,6 @@ import { useQuery } from "react-query";
 import axios from "axios";
 import { PostType } from "../../types/Post";
 import { motion } from "framer-motion";
-import { PostsType } from "@/app/types/Posts";
 
 type URL = {
   params: {
