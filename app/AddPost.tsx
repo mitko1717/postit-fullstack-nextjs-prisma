@@ -37,7 +37,7 @@ export default function CreatePost() {
     setIsDisabled(true);
     toastPostID = toast.loading("creating post", {
       id: toastPostID,
-      duration: 2200,
+      duration: 2500,
     });
     mutate(title);
   };

@@ -17,7 +17,7 @@ export default function MyPosts(): JSX.Element {
 
   const { data, isLoading } = useQuery<AuthPosts>({
     queryFn: fetchAuthPosts,
-    queryKey: ["auth-posts"],
+    queryKey: ["auth-posts"], // caching data
   });
 
   if (isLoading) return <h1>Posts are loading...</h1>;

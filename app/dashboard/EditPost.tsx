@@ -39,14 +39,17 @@ export default function EditPost({
     {
       onError: (e) => {
         console.log(e);
+        toast.error("error deleting post", { id: deleteToastID });
       },
       onSuccess: (data) => {
-        console.log(data);
+        toast.success("post has been deleted", { id: deleteToastID });
+        queryClient.invalidateQueries(["auth-posts"]); // auto updating posts list after delete
       },
     }
   );
 
   const deletePost = () => {
+    toast.loading("deleting your post", { id: deleteToastID, duration: 2500 });
     mutate(id);
   };
 
